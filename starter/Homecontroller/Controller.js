@@ -11,14 +11,14 @@ const getAllTask = asyncWrapper(async (req, res) => {
 )
 
 const CreateTask = asyncWrapper(async (req, res) => {
-    const task = await Task.create(req.body)
+    const tasks = await Task.create(req.body)
     res.status(201).json({ tasks })
 })
 
 
 const getTask = asyncWrapper(async (req, res, next) => {
     const { id: taskID } = req.params
-    const tass = await Task.findOne({ _id: taskID });
+    const tasks = await Task.findOne({ _id: taskID });
     if (!tasks) {
         return next(createCustomError(`No task with id:  ${taskID}`, 404))
     }
@@ -42,14 +42,14 @@ const UpdateTask = asyncWrapper(async (req, res) => {
 
 const deleteTask = asyncWrapper(async (req, res) => {
     const { id: taskID } = req.params
-    const tasks = await Task.findOneAn({ _id: taskID });
+    const tasks = await Task.findOneAndDelete({ _id: taskID });
     if (!tasks) {
         return res.status(404).json({ msg: `No task with id:  ${taskID}` })
     }
     res.status(200).json({ tasks, status: "Success!" })
 })
-const GetTaskEdit=(req,res)=>{
-}
+// const GetTaskEdit=(req,res)=>{
+// }
 // const editTask= async(req,res)=>{
 //     try {
 //         const { id: taskID } = req.params
